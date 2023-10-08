@@ -45,6 +45,10 @@ There are 39 aisles with more than 10000 items ordered.
 #### Question1_3
 Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
 ```{r}
-instacart
+instacart %>%
+  filter(aisle %in% c('baking ingredients', 'dog food care', 'packaged vegetables fruits')) %>% #filters the dataset into only these three values
+  group_by(aisle) %>% #groups the filtered dataset
+  count(product_name) %>% #count the number of each products
+  top_n(3) #select the top 3 products with the highest count
 ```
 
