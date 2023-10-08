@@ -1,0 +1,17 @@
+---
+title: "p8105_hw3_yx2858"
+author: "Yueyi Xu"
+date: "2023-10-08"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(p8105.datasets)
+library(tidyverse)
+library(dplyr)
+```
+
