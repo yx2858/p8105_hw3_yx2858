@@ -80,12 +80,12 @@ question2_1 <- brfss_smart2010 %>% #assign the variable
 #### Question2_2
 In 2002, which states were observed at 7 or more locations? What about in 2010?
 ```{r}
-question2_2_2002 <- brfss_smart2010 %>% #assign the variable
+question2_2_2002 <- question2_1 %>% #assign the variable
   filter(Year == 2002) %>% #filter the dataset to include only data for the year 2002 
   group_by(Locationabbr) %>% #group the dataset by the "Locationabbr" variable which represents the state
   summarize(count_locationdistinct = n_distinct(Locationdesc)) %>% #in each state group, calculate the number of distinct "Locationdesc" values and add up together
   filter(count_locationdistinct >= 7) #filter the result to include only states where the count of distinct "Locationdesc" values is greater or equal to 7
-question2_2_2010 <- brfss_smart2010 %>% #assign the variable
+question2_2_2010 <- question2_1 %>% #assign the variable
   filter(Year == 2010) %>% #filter the dataset to include only data for the year 2010
   group_by(Locationabbr) %>% #group the dataset by the "Locationabbr" variable which represents the state
   summarize(count_locationdistinct = n_distinct(Locationdesc)) %>% #in each state group, calculate the number of distinct "Locationdesc" values and add up together
@@ -94,5 +94,17 @@ question2_2_2010 <- brfss_smart2010 %>% #assign the variable
 In 2002, CT, FL, MA, NC, NJ, and PA were observed at 7 or more locations. In 2010, CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, and WA were observed at 7 or more locations.
 
 
+#### Question2_3
+Construct a dataset that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
+```{r}
+question2_3_lineplot <- question2_1 %>% #assign a line plot variable
+  filter(Response == 'Excellent') %>% #filter and limit to only excellent response
+  select(Year, Locationabbr, Data_value) %>% #select columns from the filtered dataset of "Year", "Locationabbr", and "Data_value" 
+  group_by(Year, Locationabbr) %>% #group the dataset of "Year" and "Locationabbr"
+  summarize(Data_value = mean(Data_value, na.rm =TRUE)) %>% #calculate the mean of "Data_value" for each of "Year" and "Locationabbr", ignore the ones with missing value
+  ungroup(Year, Locationabbr) #ungroup the uncleaned dataset
+ggplot(data = question2_3_lineplot, aes(x = Year, y = Data_value)) +
+  geom_line(aes(color = Locationabbr)) #set up the dataset of "question2_1_lineplot" and map the x axis as the "Year" variable and y axis as the "Data_value" variable; add a line to create a line chart and set each of the "Locationabbr" with a different color in the plot
+```
 
 
