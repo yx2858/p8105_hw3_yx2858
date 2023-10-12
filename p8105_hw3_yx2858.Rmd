@@ -197,3 +197,19 @@ accel_clean_df =
 ```
 
 
+Combine two dataframes:
+```{r}
+combine_covar_accel = #create a combined dataframe
+  left_join(covar_clean_df, accel_clean_df, by = "seqn") #left_join combine two dataframes based on the common column "seqn"
+```
+
+
+#### Question3_1
+Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items.
+```{r}
+sex_education = 
+  select(covar_clean_df, sex | education) #select only sex and education columns from the dataframe
+table(sex_education) #generate a table containing the numbers of sex and education columns only
+```
+
+
