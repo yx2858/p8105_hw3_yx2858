@@ -82,7 +82,6 @@ data("brfss_smart2010")
 ```
 
 #### Question2_1
-
 Data Cleaning:
 ```{r}
 brfss_clean_df = 
@@ -159,6 +158,41 @@ question2_4_2006_2010 |>
     x = "Year",
     y = "Distribution of Data_value",
     caption = "Data from the p8105.datasets"
+  )
+```
+
+
+
+# Problem 3
+Clean, organize the nhanes_covar dataset:
+```{r}
+covar_clean_df =
+  read_csv("nhanes_covar.csv", skip = 4) |> #import the data to dataframe
+  janitor::clean_names() |> #clean the names
+  filter(age >= 21) |> #filter the data to include only age larger than 21
+  mutate(
+    sex = replace(sex, sex == 1, "Male"),
+    sex = replace(sex, sex == 2, "Female"),
+    education = replace(education, education == 1, "Less than high school"),
+    education = replace(education, education == 2, "High school equivalent"),
+    education = replace(education, education == 3, "More than high school")
+  ) |> #replace the values in sex and education columns
+  mutate(sex = as.factor(sex),
+         education = as.factor(education)) |> #convert the sex and education columns to factor variables
+  na.omit() #remove rows with missing values from the dataset
+```
+
+
+Clean, organize the nhanes_accel dataset:
+```{r}
+accel_clean_df =
+  read_csv("nhanes_accel.csv") |> #import the data to dataframe
+  janitor::clean_names() |> #clean the names
+  pivot_longer(
+    min1:min1440, #specify the range of columns to pivot 
+    names_to = "number", #rename the columns of "number" to represent "min"
+    values_to = "counts", #rename the columns of "counts" to represent "values" in "min"
+    names_prefix = "min" #remove the "min" in front of all column names
   )
 ```
 
