@@ -206,10 +206,33 @@ combine_covar_accel = #create a combined dataframe
 
 #### Question3_1
 Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items.
+
+Table:
 ```{r}
 sex_education = 
   select(covar_clean_df, sex | education) #select only sex and education columns from the dataframe
 table(sex_education) #generate a table containing the numbers of sex and education columns only
 ```
+
+
+Visualization:
+```{r}
+covar_clean_df |>
+  ggplot(aes(x = age, fill = sex)) + #set up the ggplot and specify the x axis as age and fill aesthetic is mapped to the sex variable (i.e. men and women)
+  geom_density(alpha = .5) + #add a density plot
+  facet_grid(. ~ education) +
+  labs(
+    title = "Age distributions for men and women in each education category",
+    x = "age",
+    y = "density",
+    caption = "Data from the nhanes_covar.csv"
+  ) +
+  theme_minimal()
+```
+
+
+
+#### Question3_2
+
 
 
