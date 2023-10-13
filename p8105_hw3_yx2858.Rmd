@@ -193,7 +193,8 @@ accel_clean_df =
     names_to = "minutes", #rename the columns of "minutes" to represent time of minutes
     values_to = "val_min", #rename the columns of "val_min" to represent values of minutes
     names_prefix = "min" #remove the "min" in front of all column names
-  )
+  ) |>
+  mutate(minutes = as.numeric(minutes)) #change the variable minutes from characters to numerics
 ```
 
 
