@@ -88,9 +88,9 @@ brfss_clean_df =
   brfss_smart2010 |>
   janitor::clean_names() |>
   filter(topic == "Overall Health") |> #filter the dataset to include only "Overall Health"
-  filter(response == "Excellent" | response == "Very good" | response == "Good" | response == "Fair" | response == "Poor") |>
+  filter(response == "Poor" | response == "Fair" | response == "Good" | response == "Very good" | response == "Excellent") |>
   mutate(response = as.factor(response), 
-         response = ordered(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor"))) #modify the "Response" variable by converting it 
+         response = ordered(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"))) #modify the "Response" variable by converting it 
 ```
 
 
@@ -137,6 +137,7 @@ question2_3_excellent |>
   ) +
   theme_minimal() #apply the minimalistic theme to the plot, result in a clean and minimal appearance
 ```
+This spaghetti plot illustrates the average value over time within different states, specifically focusing on the responses of "Excellent". From the plot, the state WV has two significant outliers of 11.5 in year 2005 and 13.4 in year 2009. Moreover, the state IN has an obvious outlier of 13.3 in year 2007 as well. All other average values over time lie between 15 to 30. The "theme_minimal" function enhances the clarity of visualization of the plot.
 
 
 #### Question2_4
@@ -160,6 +161,7 @@ question2_4_2006_2010 |>
     caption = "Data from the p8105.datasets"
   )
 ```
+The boxplot shows the distribution of "data_value" across different responses categories within the state of NY for year 2006 and 2010. The boxplot indicates the visualization of median, quartile, and range. From both 2006 and 2010 graphs, the responses on "Poor" have the lowest values among locations in NY state, and comparatively the responses on "Very good" have the highest values. Moreover, the responses of "Good" in 2006 graph has moderate high values as well, but it has a lower median than the responses of "Very good" group.
 
 
 
